@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BUILD_PATH: "./astro" # this has been changed, previously it was "."
+  BUILD_PATH: "astro" # this has been changed, previously it was "."
   # BUILD_PATH: subfolder
 
 jobs:
