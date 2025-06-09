@@ -1,6 +1,7 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
+# triggers
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -21,23 +22,36 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+# jobs
 jobs:
   # Single deploy job since we're just deploying
+  first_job:
+    name: first job
   deploy:
+    name: static deployment
     environment:
+      #This is simply a name for the environment used to label this deployment. It's not related to the actual branch you're deploying from
       name: github-pages
+      # dinamically takes the url from the last step
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        # checkout the commit and retrieve code so the workflow can access it https://github.com/actions/checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
+        # configuring GitHub Pages for the repository
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
+        #uploads the repository contents (or specific files) as an artifact that can be used in later steps.
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: '.'
+          path: "."
+
       - name: Deploy to GitHub Pages
+        # deploy Actions artifacts to GitHub Pages.
         id: deployment
         uses: actions/deploy-pages@v4
